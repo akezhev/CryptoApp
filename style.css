@@ -1,57 +1,119 @@
-body {
-  font-family: Montserrat, sans-serif;
-  font-weight: 700;
-}
-
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      /* font-family: 'Segoe UI', system-ui, sans-serif;  */
-      background: #0a0e1a; 
-      color: #e0e6ed;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .container { width: 100%; max-width: 840px; padding: 20px; }
-    .nav {
-      /* display: grid;
-      grid-template-columns: auto 1fr; */
-      /* gap: 12px 20px; */
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #111827;
-      padding: 24px 32px;
-      border-radius: 16px;
-      border: 1px solid #1f2937;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-    }
-    .nav p {
-      font-weight: 600;
-      font-size: 14px;
-      color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .nav span {
-      font-family: 'SF Mono', monospace;
-      font-size: 18px;
-      font-weight: 700;
-      color: #10b981;
-      text-align: right;
-      transition: color 0.2s;
-    }
-    .nav span.up { color: #10b981; }
-    .nav span.down { color: #ef4444; }
-    .nav span.loading { color: #6b7280; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
-    .status {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 12px;
-      color: #4b5563;
-    }
-    .status.error { color: #ef4444; }
-    .status.connected { color: #10b981; }
+body { 
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+
+  background: #0a0e1a; 
+  color: #e0e6ed;
+  /* min-height: 100vh; */
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+.container { width: auto; padding: 32px;}
+.nav {
+  /* display: grid;
+  grid-template-columns: auto 1fr; */
+  gap: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #111827;
+  padding: 24px 32px;
+  border-radius: 16px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+/* .nav p {
+  font-weight: 600;
+  font-size: 14px;
+  color: #95f8fa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nav span {
+  font-family: 'SF Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #10b981;
+  text-align: right;
+  transition: color 0.2s;
+}
+.nav span.up { color: #10b981; }
+.nav span.down { color: #ef4444; }
+.nav span.loading { color: #6b7280; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.status {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #4b5563;
+}
+.status.error { color: #ef4444; }
+.status.connected { color: #10b981; } */
+.nav p {
+  font-weight: 600;
+  font-size: 14px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.nav span {
+  font-family: 'SF Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #e0e6ed;
+  text-align: right;
+  padding: 4px 12px;
+  border-radius: 8px;
+  transition: all 0.4s ease;
+  position: relative;
+}
+/* Индикатор роста — зелёная вспышка */
+.nav span.up {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+  animation: flashGreen 0.8s ease;
+}
+/* Индикатор падения — красная вспышка */
+.nav span.down {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+  animation: flashRed 0.8s ease;
+}
+@keyframes flashGreen {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  50% { box-shadow: 0 0 20px 4px rgba(16, 185, 129, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes flashRed {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  50% { box-shadow: 0 0 20px 4px rgba(239, 68, 68, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.nav span.loading { color: #6b7280; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* Стрелка роста */
+.nav span.up::after,
+.nav span.down::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+}
+.nav span.up::after { content: '▲'; color: #10b981; }
+.nav span.down::after { content: '▼'; color: #ef4444; }
+
+.status {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #4b5563;
+}
+.status.error { color: #ef4444; }
+.status.connected { color: #10b981; }
