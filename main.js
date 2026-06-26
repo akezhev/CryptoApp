@@ -60,7 +60,9 @@ const PAIRS = [
   { symbol: 'BTC', name: 'BIT' },   // BIT → BTC
   { symbol: 'ETH', name: 'ETH' },
   { symbol: 'SOL', name: 'SOL' },
-  { symbol: 'XRP', name: 'XRP' }
+  { symbol: 'XRP', name: 'XRP' },
+  { symbol: 'ADA', name: 'ADA'},
+  { symbol: 'DOGE', name: 'DOGE'}
 ];
 
 const nav = document.getElementById('tickerNav');
