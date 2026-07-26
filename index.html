@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,10 +14,10 @@
   <link rel="stylesheet" href="/CSS/normalize.css">
   <link rel="stylesheet" href="/CSS/cosmic.css">
   <link rel="stylesheet" href="/CSS/fear&greed.css">
+  <link rel="stylesheet" href="/CSS/btc-widget.css">
   <link rel="stylesheet" href="/CSS/style.css">
 
-  <title>CryptoApp
-  </title>
+  <title>CryptoApp</title>
 </head>
 <body>
 
@@ -43,6 +45,7 @@
   </div>
 
   <div class="container">
+    <div class="cosmic-box">CryptoApp</div>
 
     <!-- HEADER -->
     <div class="nav" id="tickerNav">
@@ -50,85 +53,150 @@
     </div>
     <div class="status" id="status">Загрузка данных...</div>
 
-    <!-- Fear&Greed_Index -->
-    <div class="fng-widget" id="fngWidget">
-      <div class="loading" id="loadingState">
-        <div class="spinner"></div>
-        <span style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</span>
-      </div>
+    <div class="section-header">
+      <!-- Fear&Greed_Index -->
+      <div class="fng-widget" id="fngWidget">
+        <div class="loading" id="loadingState">
+          <div class="spinner"></div>
+          <span style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</span>
+        </div>
+        
+        <div id="contentState" style="display: none;">
+          <div class="widget-header">
+            <div>
+              <div class="widget-title">Fear & Greed Index</div>
+              <div class="widget-subtitle">Bitcoin Sentiment</div>
+            </div>
+            <div class="live-badge">
+              <span class="live-dot"></span>
+              Live
+            </div>
+          </div>
       
-      <div id="contentState" style="display: none;">
-        <div class="widget-header">
-          <div>
-            <div class="widget-title">Fear & Greed Index</div>
-            <div class="widget-subtitle">Bitcoin Sentiment</div>
+          <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 280 160">
+              <!-- Фон дуги -->
+              <path class="gauge-track" d="M 40 140 A 100 100 0 0 1 240 140" />
+              
+              <!-- Цветная дуга (будет обновлена JS) -->
+              <path id="gaugeFill" class="gauge-fill" d="M 40 140 A 100 100 0 0 1 240 140" 
+                    stroke-dasharray="314" stroke-dashoffset="314" stroke="#ef4444" />
+              
+              <!-- Стрелка -->
+              <g id="gaugeNeedle" class="gauge-needle">
+                <polygon points="136,140 144,140 140,45" fill="#fff" />
+                <circle cx="140" cy="140" r="8" fill="#fff" />
+                <circle cx="140" cy="140" r="4" fill="var(--card-bg)" />
+              </g>
+            </svg>
+            
+            <div class="gauge-center">
+              <div class="gauge-value" id="gaugeValue">--</div>
+              <div class="gauge-label" id="gaugeLabel">Загрузка...</div>
+            </div>
           </div>
-          <div class="live-badge">
-            <span class="live-dot"></span>
-            Live
+      
+          <div class="scale-labels">
+            <span>Extreme Fear</span>
+            <span>Fear</span>
+            <span>Neutral</span>
+            <span>Greed</span>
+            <span>Extreme Greed</span>
+          </div>
+      
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Вчера</div>
+              <div class="stat-value" id="yesterdayVal">--</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Неделя</div>
+              <div class="stat-value" id="weekVal">--</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Месяц</div>
+              <div class="stat-value" id="monthVal">--</div>
+            </div>
+          </div>
+      
+          <div class="update-info">
+            Следующее обновление через <span class="next-update" id="nextUpdate">--</span>
           </div>
         </div>
-    
-        <div class="gauge-container">
-          <svg class="gauge-svg" viewBox="0 0 280 160">
-            <!-- Фон дуги -->
-            <path class="gauge-track" d="M 40 140 A 100 100 0 0 1 240 140" />
-            
-            <!-- Цветная дуга (будет обновлена JS) -->
-            <path id="gaugeFill" class="gauge-fill" d="M 40 140 A 100 100 0 0 1 240 140" 
-                  stroke-dasharray="314" stroke-dashoffset="314" stroke="#ef4444" />
-            
-            <!-- Стрелка -->
-            <g id="gaugeNeedle" class="gauge-needle">
-              <polygon points="136,140 144,140 140,45" fill="#fff" />
-              <circle cx="140" cy="140" r="8" fill="#fff" />
-              <circle cx="140" cy="140" r="4" fill="var(--card-bg)" />
-            </g>
+      
+        <div class="error-state" id="errorState" style="display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
-          
-          <div class="gauge-center">
-            <div class="gauge-value" id="gaugeValue">--</div>
-            <div class="gauge-label" id="gaugeLabel">Загрузка...</div>
-          </div>
-        </div>
-    
-        <div class="scale-labels">
-          <span>Extreme Fear</span>
-          <span>Fear</span>
-          <span>Neutral</span>
-          <span>Greed</span>
-          <span>Extreme Greed</span>
-        </div>
-    
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">Вчера</div>
-            <div class="stat-value" id="yesterdayVal">--</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Неделя</div>
-            <div class="stat-value" id="weekVal">--</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Месяц</div>
-            <div class="stat-value" id="monthVal">--</div>
-          </div>
-        </div>
-    
-        <div class="update-info">
-          Следующее обновление через <span class="next-update" id="nextUpdate">--</span>
+          <div style="font-weight: 600; margin-bottom: 4px;">Не удалось загрузить данные</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Проверьте подключение к интернету</div>
+          <button class="retry-btn" onclick="fetchData()">Повторить</button>
         </div>
       </div>
-    
-      <div class="error-state" id="errorState" style="display: none;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-        <div style="font-weight: 600; margin-bottom: 4px;">Не удалось загрузить данные</div>
-        <div style="font-size: 13px; color: var(--text-muted);">Проверьте подключение к интернету</div>
-        <button class="retry-btn" onclick="fetchData()">Повторить</button>
+
+      <!-- BTC-widget -->
+      <div class="btc-widget">
+      <div class="widget-header">
+        <div class="coin-info">
+          <div class="coin-icon">₿</div>
+          <div class="coin-details">
+            <h2>Bitcoin</h2>
+            <span>BTC / USD</span>
+          </div>
+        </div>
+        <div class="price-info">
+          <div class="current-price" id="currentPrice">$ —</div>
+          <div class="price-change" id="priceChange">—</div>
+        </div>
+      </div>
+
+      <div class="timeframe-buttons">
+        <button class="timeframe-btn active" data-days="1">24ч</button>
+        <button class="timeframe-btn" data-days="7">7д</button>
+        <button class="timeframe-btn" data-days="30">30д</button>
+        <button class="timeframe-btn" data-days="90">3м</button>
+        <button class="timeframe-btn" data-days="365">1г</button>
+      </div>
+
+      <div class="chart-container" id="chartContainer">
+        <div class="loading">
+            <div class="spinner"></div>
+            <div>Загрузка данных...</div>
+        </div>
+      </div>
+
+      <div class="stats-row" id="statsRow" style="display: none;">
+        <div class="stat-item">
+            <div class="stat-label">Макс (период)</div>
+            <div class="stat-value" id="statHigh">—</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">Мин (период)</div>
+            <div class="stat-value" id="statLow">—</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">Объём 24ч</div>
+            <div class="stat-value" id="statVolume">—</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">Рыночная кап.</div>
+            <div class="stat-value" id="statCap">—</div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-indicator">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Подключение...</span>
+        </div>
+        <div>
+          <span class="cache-badge" id="cacheBadge" style="display:none;">КЭШ</span>
+          <span id="lastUpdate">—</span>
+        </div>
+      </div>
       </div>
     </div>
+
     
     <!-- MAIN -->
     <div class="main">
@@ -137,8 +205,9 @@
     </div>
 
 
-    
+    <div class="cosmic-box">CryptoApp</div>
   </div>
+
 
 
   <script src="./JS/header.js"></script>
