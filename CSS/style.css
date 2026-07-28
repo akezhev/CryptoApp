@@ -99,9 +99,16 @@ body {
 .status.connected { color: #10b981; }
 
 .section-header {
+
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  width: 100%;
+  height: 690px;
+  gap: 10px;
+  
+  /* Защита от переполнения */
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* ------------------------------------MAIN---------------------------------- */

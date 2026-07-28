@@ -5,9 +5,10 @@
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 50px;
-  width: 100%;
+
+  flex: 0 0 62%;
   height: auto;
-  max-width: 65%;
+
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 

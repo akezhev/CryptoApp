@@ -13,8 +13,9 @@
 
   <link rel="stylesheet" href="/CSS/normalize.css">
   <link rel="stylesheet" href="/CSS/cosmic.css">
+  <link rel="stylesheet" href="/CSS/widget-RSI.css">
   <link rel="stylesheet" href="/CSS/fear&greed.css">
-  <link rel="stylesheet" href="/CSS/btc-widget.css">
+  <link rel="stylesheet" href="/CSS/widget-BTC-chart.css">
   <link rel="stylesheet" href="/CSS/style.css">
 
   <title>CryptoApp</title>
@@ -54,84 +55,43 @@
     <div class="status" id="status">Загрузка данных...</div>
 
     <div class="section-header">
-      <!-- Fear&Greed_Index -->
-      <div class="fng-widget" id="fngWidget">
-        <div class="loading" id="loadingState">
-          <div class="spinner"></div>
-          <span style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</span>
-        </div>
-        
-        <div id="contentState" style="display: none;">
-          <div class="widget-header">
-            <div>
-              <div class="widget-title">Fear & Greed Index</div>
-              <div class="widget-subtitle">Bitcoin Sentiment</div>
-            </div>
-            <div class="live-badge">
-              <span class="live-dot"></span>
-              Live
-            </div>
+
+      <!-- RSI-widget -->
+      <div class="rsi-widget" id="rsiWidget">
+        <div class="rsi-widget-header">
+          <div class="rsi-widget-title">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            RSI Signal Monitor
           </div>
-      
-          <div class="gauge-container">
-            <svg class="gauge-svg" viewBox="0 0 280 160">
-              <!-- Фон дуги -->
-              <path class="gauge-track" d="M 40 140 A 100 100 0 0 1 240 140" />
-              
-              <!-- Цветная дуга (будет обновлена JS) -->
-              <path id="gaugeFill" class="gauge-fill" d="M 40 140 A 100 100 0 0 1 240 140" 
-                    stroke-dasharray="314" stroke-dashoffset="314" stroke="#ef4444" />
-              
-              <!-- Стрелка -->
-              <g id="gaugeNeedle" class="gauge-needle">
-                <polygon points="136,140 144,140 140,45" fill="#fff" />
-                <circle cx="140" cy="140" r="8" fill="#fff" />
-                <circle cx="140" cy="140" r="4" fill="var(--card-bg)" />
-              </g>
-            </svg>
-            
-            <div class="gauge-center">
-              <div class="gauge-value" id="gaugeValue">--</div>
-              <div class="gauge-label" id="gaugeLabel">Загрузка...</div>
-            </div>
-          </div>
-      
-          <div class="scale-labels">
-            <span>Extreme Fear</span>
-            <span>Fear</span>
-            <span>Neutral</span>
-            <span>Greed</span>
-            <span>Extreme Greed</span>
-          </div>
-      
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-label">Вчера</div>
-              <div class="stat-value" id="yesterdayVal">--</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Неделя</div>
-              <div class="stat-value" id="weekVal">--</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Месяц</div>
-              <div class="stat-value" id="monthVal">--</div>
-            </div>
-          </div>
-      
-          <div class="update-info">
-            Следующее обновление через <span class="next-update" id="nextUpdate">--</span>
+          <div class="rsi-widget-status status-connecting" id="wsStatus">
+            <span class="status-dot"></span>
+            <span id="wsStatusText">Подключение...</span>
           </div>
         </div>
       
-        <div class="error-state" id="errorState" style="display: none;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <div style="font-weight: 600; margin-bottom: 4px;">Не удалось загрузить данные</div>
-          <div style="font-size: 13px; color: var(--text-muted);">Проверьте подключение к интернету</div>
-          <button class="retry-btn" onclick="fetchData()">Повторить</button>
+        <div id="assetsContainer">
+          <div class="rsi-loading">
+            <div class="rsi-loading-spinner"></div>
+            Загрузка исторических данных...
+          </div>
         </div>
+      
+        <div class="rsi-legend">
+          <div class="rsi-legend-item">
+            <div class="rsi-dot" style="background: #3fb950;"></div>
+            <span>RSI &lt; 15 — Сигнал ЛОНГ</span>
+          </div>
+          <div class="rsi-legend-item">
+            <div class="rsi-dot" style="background: #f85149;"></div>
+            <span>RSI &gt; 85 — Сигнал ШОРТ</span>
+          </div>
+          <div class="rsi-legend-item">
+            <div class="rsi-dot" style="background: #21262d; border: 1px solid #30363d;"></div>
+            <span>Нейтрально</span>
+          </div>
+        </div>
+      
+        <div class="rsi-last-update" id="lastUpdate"></div>
       </div>
 
       <!-- BTC-widget -->
@@ -195,6 +155,8 @@
         </div>
       </div>
       </div>
+
+
     </div>
 
     
@@ -203,14 +165,99 @@
       <div class="cosmic-box">CryptoApp</div>
       <img src="IMG/crypto_cosmos_02.png" alt="crypto_cosmos_02" class="main_img">
     </div>
-
-
+    
     <div class="cosmic-box">CryptoApp</div>
+
+
+    <!-- Fear&Greed_Index -->
+    <div class="fng-widget" id="fngWidget">
+      <div class="loading" id="loadingState">
+        <div class="spinner"></div>
+        <span style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</span>
+      </div>
+      
+      <div id="contentState" style="display: none;">
+        <div class="widget-header">
+          <div>
+            <div class="widget-title">Fear & Greed Index</div>
+            <div class="widget-subtitle">Bitcoin Sentiment</div>
+          </div>
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            Live
+          </div>
+        </div>
+    
+        <div class="gauge-container">
+          <svg class="gauge-svg" viewBox="0 0 280 160">
+            <!-- Фон дуги -->
+            <path class="gauge-track" d="M 40 140 A 100 100 0 0 1 240 140" />
+            
+            <!-- Цветная дуга (будет обновлена JS) -->
+            <path id="gaugeFill" class="gauge-fill" d="M 40 140 A 100 100 0 0 1 240 140" 
+                  stroke-dasharray="314" stroke-dashoffset="314" stroke="#ef4444" />
+            
+            <!-- Стрелка -->
+            <g id="gaugeNeedle" class="gauge-needle">
+              <polygon points="136,140 144,140 140,45" fill="#fff" />
+              <circle cx="140" cy="140" r="8" fill="#fff" />
+              <circle cx="140" cy="140" r="4" fill="var(--card-bg)" />
+            </g>
+          </svg>
+          
+          <div class="gauge-center">
+            <div class="gauge-value" id="gaugeValue">--</div>
+            <div class="gauge-label" id="gaugeLabel">Загрузка...</div>
+          </div>
+        </div>
+    
+        <div class="scale-labels">
+          <span>Extreme Fear</span>
+          <span>Fear</span>
+          <span>Neutral</span>
+          <span>Greed</span>
+          <span>Extreme Greed</span>
+        </div>
+    
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Вчера</div>
+            <div class="stat-value" id="yesterdayVal">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Неделя</div>
+            <div class="stat-value" id="weekVal">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Месяц</div>
+            <div class="stat-value" id="monthVal">--</div>
+          </div>
+        </div>
+    
+        <div class="update-info">
+          Следующее обновление через <span class="next-update" id="nextUpdate">--</span>
+        </div>
+      </div>
+    
+      <div class="error-state" id="errorState" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div style="font-weight: 600; margin-bottom: 4px;">Не удалось загрузить данные</div>
+        <div style="font-size: 13px; color: var(--text-muted);">Проверьте подключение к интернету</div>
+        <button class="retry-btn" onclick="fetchData()">Повторить</button>
+      </div>
+    </div>
+
+
   </div>
 
 
 
+  <script src="./JS/main.js"></script>
   <script src="./JS/header.js"></script>
-  <script src="/JS/main.js"></script>
+  <script src="./JS/widget-RSI.js"></script>
+  <script src="./JS/widget-BTC.js"></script>
+  <script src="./JS/widget-FEAR&GREED.js"></script>
 </body>
 </html>

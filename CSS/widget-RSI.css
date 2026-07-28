@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.rsi-widget {
+  background: #0d1117;
+  color: #c9d1d9;
+  border-radius: 16px;
+  padding: 20px;
+  flex: 0 0 36%;
+  max-width: 100%;
+  margin-bottom: 50px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  border: 1px solid #30363d;
+}
+
+.rsi-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #21262d;
+}
+
+.rsi-widget-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f0f6fc;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rsi-widget-title svg {
+  width: 22px;
+  height: 22px;
+  fill: #58a6ff;
+}
+
+.rsi-widget-status {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-connected {
+  background: rgba(35, 134, 54, 0.2);
+  color: #3fb950;
+  border: 1px solid rgba(35, 134, 54, 0.3);
+}
+
+.status-disconnected {
+  background: rgba(218, 54, 51, 0.2);
+  color: #f85149;
+  border: 1px solid rgba(218, 54, 51, 0.3);
+}
+
+.status-connecting {
+  background: rgba(158, 106, 3, 0.2);
+  color: #d29922;
+  border: 1px solid rgba(158, 106, 3, 0.3);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+
+.status-connected .status-dot { background: #3fb950; }
+.status-disconnected .status-dot { background: #f85149; animation: none; }
+.status-connecting .status-dot { background: #d29922; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.rsi-asset-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #21262d;
+  transition: all 0.2s;
+}
+
+.rsi-asset-row:last-child {
+  border-bottom: none;
+}
+
+.rsi-asset-row:hover {
+  background: #161b22;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 8px;
+}
+
+.rsi-asset-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 100px;
+}
+
+.rsi-asset-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.rsi-asset-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: #f0f6fc;
+}
+
+.rsi-asset-price {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rsi-timeframes {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.rsi-tf-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 58px;
+  position: relative;
+}
+
+.rsi-tf-label {
+  font-size: 10px;
+  color: #6e7681;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rsi-value {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+  min-width: 50px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  font-variant-numeric: tabular-nums;
+  cursor: help;
+}
+
+.rsi-normal {
+  background: #21262d;
+  color: #8b949e;
+  border: 1px solid transparent;
+}
+
+.rsi-oversold {
+  background: rgba(35, 134, 54, 0.15);
+  color: #3fb950;
+  border: 1px solid rgba(35, 134, 54, 0.4);
+  box-shadow: 0 0 16px rgba(35, 134, 54, 0.2);
+  animation: pulse-green 2s infinite;
+}
+
+.rsi-overbought {
+  background: rgba(218, 54, 51, 0.15);
+  color: #f85149;
+  border: 1px solid rgba(218, 54, 51, 0.4);
+  box-shadow: 0 0 16px rgba(218, 54, 51, 0.2);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 12px rgba(35, 134, 54, 0.2); transform: scale(1); }
+  50% { box-shadow: 0 0 24px rgba(35, 134, 54, 0.5); transform: scale(1.05); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 12px rgba(218, 54, 51, 0.2); transform: scale(1); }
+  50% { box-shadow: 0 0 24px rgba(218, 54, 51, 0.5); transform: scale(1.05); }
+}
+
+.rsi-signal-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 800;
+  color: #fff;
+  animation: signal-bounce 1s infinite;
+}
+
+.signal-buy {
+  background: #238636;
+}
+
+.signal-sell {
+  background: #da3633;
+}
+
+@keyframes signal-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.rsi-legend {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #21262d;
+  display: flex;
+  gap: 20px;
+  font-size: 11px;
+  color: #6e7681;
+  flex-wrap: wrap;
+}
+
+.rsi-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rsi-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.rsi-loading {
+  text-align: center;
+  padding: 50px 20px;
+  color: #6e7681;
+  font-size: 14px;
+}
+
+.rsi-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #21262d;
+  border-top-color: #58a6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.rsi-error {
+  text-align: center;
+  padding: 30px 20px;
+  color: #f85149;
+  font-size: 13px;
+}
+
+.rsi-error button {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.rsi-error button:hover {
+  background: #30363d;
+}
+
+.rsi-last-update {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 10px;
+  color: #484f58;
+}
+
+/* Tooltip */
+.rsi-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #161b22;
+  border: 1px solid #30363d;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+  color: #f0f6fc;
+}
+
+.rsi-tf-block:hover .rsi-tooltip {
+  opacity: 1;
+}

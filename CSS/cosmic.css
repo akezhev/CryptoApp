@@ -45,6 +45,7 @@
 
 /* box-shadow_animate */
 .cosmic-box {
+  margin-bottom: 40px;
   font-size: 16px;
   text-align: center;
   border-radius: 24px;
