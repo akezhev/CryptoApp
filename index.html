@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +15,9 @@
   <link rel="stylesheet" href="/CSS/normalize.css">
   <link rel="stylesheet" href="/CSS/cosmic.css">
   <link rel="stylesheet" href="/CSS/widget-RSI.css">
-  <link rel="stylesheet" href="/CSS/fear&greed.css">
   <link rel="stylesheet" href="/CSS/widget-BTC-chart.css">
+  <link rel="stylesheet" href="/CSS/fear&greed.css">
+  <link rel="stylesheet" href="/CSS/widget-NDE.css">
   <link rel="stylesheet" href="/CSS/style.css">
 
   <title>CryptoApp</title>
@@ -249,15 +251,77 @@
       </div>
     </div>
 
+    <!-- widget-NWE -->
+    <div class="widget-container">
+      <div class="widget-header">
+          <div class="widget-title">📊 Nadaraya-Watson Envelope Pro</div>
+          <div class="status-indicator">
+              <span id="connectionStatus">Подключение...</span>
+              <span class="status-dot" id="statusDot"></span>
+          </div>
+      </div>
 
+      <div class="controls-row">
+          <div class="timeframe-selector">
+              <button class="timeframe-btn active" data-tf="15">15 мин</button>
+              <button class="timeframe-btn" data-tf="30">30 мин</button>
+              <button class="timeframe-btn" data-tf="45">45 мин</button>
+          </div>
+          <div class="selected-coin-display">
+              <span class="coin-icon" id="selectedCoinIcon">₿</span>
+              <span id="selectedCoinName">BTC</span>
+              <span style="color:#8892b0;font-weight:400;font-size:12px;" id="selectedCoinPrice">$0.00</span>
+          </div>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <div class="entry-signal-box" id="entrySignalBox">
+          <div class="signal-label">Сигнал для входа</div>
+          <div class="signal-main neutral" id="entrySignal">Ожидание сигнала</div>
+          <div class="signal-details">
+              <span>Уверенность: <strong id="entryConfidence">0%</strong></span>
+              <span>Таймфрейм: <strong id="entryTimeframe">15 мин</strong></span>
+              <span>Обновлено: <strong id="entryLastUpdate">--</strong></span>
+          </div>
+      </div>
+
+      <div class="chart-container">
+          <canvas id="chart"></canvas>
+      </div>
+
+      <div class="signal-summary">
+          <div class="signal-summary-item">
+              <div class="label">Текущий сигнал</div>
+              <div class="value neutral" id="currentSignal">Нейтральный</div>
+          </div>
+          <div class="signal-summary-item">
+              <div class="label">Уверенность</div>
+              <div class="value" id="confidenceValue" style="color:#00d4ff;">0%</div>
+          </div>
+          <div class="signal-summary-item">
+              <div class="label">Актив</div>
+              <div class="value" id="activeCoin" style="color:#ccd6f6;">BTC</div>
+          </div>
+      </div>
+
+      <div class="coins-grid" id="coinsGrid">
+          <!-- Coins will be rendered here -->
+      </div>
   </div>
 
+    
+  </div>
 
+  <div class="footer">
+    <h2 class="inscription">LOOK FIRST / THEN LEAP</h2>
+  </div>
 
   <script src="./JS/main.js"></script>
   <script src="./JS/header.js"></script>
   <script src="./JS/widget-RSI.js"></script>
   <script src="./JS/widget-BTC.js"></script>
+  <script src="./JS/widget-NDE.js"></script>
   <script src="./JS/widget-FEAR&GREED.js"></script>
 </body>
 </html>

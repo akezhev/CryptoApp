@@ -1,0 +1,342 @@
+.widget-container {
+  background: linear-gradient(145deg, #121827, #0d1220);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 1100px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.widget-title {
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00d4ff, #7b2ffc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #8892b0;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.disconnected {
+  background: #ef4444;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.controls-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.timeframe-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.timeframe-btn {
+  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: #8892b0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.timeframe-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.timeframe-btn.active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 47, 252, 0.2));
+  border-color: #7b2ffc;
+  color: #00d4ff;
+  box-shadow: 0 0 20px rgba(123, 47, 252, 0.1);
+}
+
+.selected-coin-display {
+  margin-left: auto;
+  padding: 8px 20px;
+  background: rgba(123, 47, 252, 0.15);
+  border-radius: 10px;
+  border: 1px solid rgba(123, 47, 252, 0.3);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selected-coin-display .coin-icon {
+  font-size: 20px;
+}
+
+.chart-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  height: 350px;
+}
+
+#chart {
+  width: 100%;
+  height: 100%;
+}
+
+.signal-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.signal-summary-item {
+  text-align: center;
+}
+
+.signal-summary-item .label {
+  font-size: 11px;
+  color: #8892b0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.signal-summary-item .value {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.signal-summary-item .value.buy {
+  color: #4ade80;
+}
+.signal-summary-item .value.sell {
+  color: #ef4444;
+}
+.signal-summary-item .value.neutral {
+  color: #8892b0;
+}
+
+.coins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.coin-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.coin-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.coin-card.active {
+  border-color: #7b2ffc;
+  background: rgba(123, 47, 252, 0.1);
+  box-shadow: 0 0 30px rgba(123, 47, 252, 0.1);
+}
+
+.coin-card .coin-symbol {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ccd6f6;
+}
+
+.coin-card .coin-price {
+  font-size: 14px;
+  color: #8892b0;
+  margin: 4px 0;
+}
+
+.coin-card .coin-signal {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.coin-card .coin-signal.buy {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+
+.coin-card .coin-signal.sell {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.coin-card .coin-signal.neutral {
+  background: rgba(255, 255, 255, 0.05);
+  color: #8892b0;
+}
+
+.coin-card .signal-strength-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.coin-card .signal-strength-bar .fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.coin-card .signal-strength-bar .fill.buy {
+  background: linear-gradient(90deg, #4ade80, #22d3ee);
+}
+
+.coin-card .signal-strength-bar .fill.sell {
+  background: linear-gradient(90deg, #ef4444, #f59e0b);
+}
+
+.coin-card .signal-strength-bar .fill.neutral {
+  background: #8892b0;
+}
+
+.entry-signal-box {
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.entry-signal-box .signal-label {
+  font-size: 12px;
+  color: #8892b0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.entry-signal-box .signal-main {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.entry-signal-box .signal-main.buy {
+  color: #4ade80;
+}
+.entry-signal-box .signal-main.sell {
+  color: #ef4444;
+}
+.entry-signal-box .signal-main.neutral {
+  color: #8892b0;
+}
+
+.entry-signal-box .signal-details {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.entry-signal-box .signal-details span {
+  font-size: 13px;
+  color: #8892b0;
+}
+
+.entry-signal-box .signal-details strong {
+  color: #ccd6f6;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: none;
+  margin-bottom: 12px;
+}
+
+.error-message.visible {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .widget-container {
+      padding: 16px;
+  }
+  .signal-summary {
+      grid-template-columns: 1fr;
+      gap: 8px;
+  }
+  .controls-row {
+      flex-direction: column;
+      align-items: stretch;
+  }
+  .selected-coin-display {
+      margin-left: 0;
+      justify-content: center;
+  }
+  .coins-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+  }
+}
